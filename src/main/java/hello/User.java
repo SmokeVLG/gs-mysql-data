@@ -1,19 +1,21 @@
 package hello;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
 
-@Entity // This tells Hibernate to make a table out of this class
+import javax.persistence.*;
+
+@Entity
+@Table(name = "USERS")
 public class User {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(generator = "GEN_USERS", strategy = GenerationType.AUTO)
+	@Column(name = "USER_ID")
     private Integer id;
 
-    private String name;
-
-    private String email;
+    @OneToOne
+	@JoinColumn(name = "EMPLOYEE_ID")
+    private Employee employee;
 
 	public Integer getId() {
 		return id;
@@ -23,22 +25,13 @@ public class User {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-    
-    
 }
 
